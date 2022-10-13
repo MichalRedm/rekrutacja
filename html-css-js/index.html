@@ -19,62 +19,51 @@
 	<meta name="viewport" charset="utf-8" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
 </head>
 <body>
-    <!--
-        ...
-        ...
-        ...
-    -->
-
-	<!-- początek formularza -->
-
-	<!-- element section ma ID "task-frontend". Może to się nam przydać m.in. podczas stylowania dokumentu -->
 	<section id="task-frontend">
 
-		<!-- element span otrzymuje klasę "basic-title". Klasa ta może być wykorzystywana w wielu różnych elementach -->
 		<span class="basic-title">Dołącz do nas!</span>
 
 		<hr class="form-line"></hr>
 
-		<form method="POST">
-
-			<!-- od użytkownika pobieramy imię, nazwisko, email oraz informację, do jakiej sekcji chce dołączyć -->
-
+		<form method="POST" autocomplete="off">
+			
 			<label for="first-name">Imię</label>
-		    <input type="text" id="first-name"/>
+			<input type="text" id="firstName" required>
 
-            <label for="last-name">Nazwisko</label>
-		    <input type="text" id="last-name"/>
+			<label for="last-name">Nazwisko</label>
+			<input type="text" id="lastName" required>
 
 			<label for="email">Email</label>
-		    <input type="email" id="email"/>
+			<input type="email" id="email" required>
 
 			<span>Sekcja</span>
-            <input type="checkbox" id="frontend-checkbox" name="section" value="frontend">
-            <label for="frontend-checkbox">Frontend</label>
-            <input type="checkbox" id="backend-checkbox" name="section" value="frontend">
-            <label for="backend-checkbox">Backend</label>
-            <input type="checkbox" id="mobile-checkbox" name="section" value="frontend">
-            <label for="mobile-checkbox">Mobile</label>
-            <input type="checkbox" id="graphics-checkbox" name="section" value="frontend">
-            <label for="graphics-checkbox">Grafika</label>
+			<div style="display: flex; flex-direction: row; gap: 16px; margin-top: 8px;">
+				<label class="container">Frontend
+					<input type="checkbox" name="section" value="frontend">
+					<span class="checkmark"></span>
+				</label>
+				<label class="container">Backend
+					<input type="checkbox" name="section" value="backtend">
+					<span class="checkmark"></span>
+				</label>
+				<label class="container">Mobile
+					<input type="checkbox" name="section" value="mobile">
+					<span class="checkmark"></span>
+				</label>
+				<label class="container">Grafika
+					<input type="checkbox" name="section" value="grafika">
+					<span class="checkmark"></span>
+				</label>
+			</div>
 
-            <input type="submit" value="Prześlij">
+			<input type="submit" value="Prześlij">
 		</form>
 
-		<hr class="form-line"></hr>
+		<!--<hr class="form-line"></hr>-->
 
 	</section>
-	<!-- koniec formularza -->
-
-    <!--
-        ...
-        ...
-        ...
-    -->
-
-
-<!-- zaimportowanie pliku z kodem javascript, który dokona walidacji danych (zadanie JS) -->
 <script type="text/javascript" src="js/validation.js"></script>
+<script type="text/javascript" src="js/animation.js"></script>
 
 </body>
 </html>

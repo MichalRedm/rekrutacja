@@ -1,0 +1,247 @@
+/*
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    AKAI Frontend Task - CSS
+
+    Spróbuj zmodyfikować poniższy plik ze stylami tak, by upiększyć formularz na stronie.
+    Jako inspiracji możesz skorzystać z szablonu znajdującego się w pliku img/layout.png
+    Nie wymagamy, by wykonać identyczny layout. Liczy się kreatywność.
+
+    Przy wykonywaniu zadania można zmienić strukturę pliku index.html.
+    Pamiętaj, że w takim wypadku będzie trzeba zadbać o dostosowanie odpowiednich selektorów.
+
+    Jeśli korzystasz z preprocessorów takich jak Sass/Less, również możesz się tym pochwalić.
+
+    Powodzenia!
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
+
+@import "config";
+@import "animations";
+
+@mixin light-up {
+    animation: pulse 2s ease-in-out infinite alternate;
+    border: 1px solid $primary-color;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $text-color;
+    font-size: 20px;
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+	background-size: 400% 400%;
+	animation: gradient 20s ease infinite;
+	height: 100vh;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+@keyframes slide-in {
+    from { opacity: 0; transform: translateY(100%) scale(0.6); filter: blur(8px); }
+    to   { opacity: 1; transform: none; filter: none; }
+}
+
+#task-frontend {
+    position: relative;
+    border-radius: 48px;
+	max-width: 850px;
+	text-align: center;
+    background-color: $bg-color;
+    padding: 48px;
+    box-shadow: 0 0 8px 0 #00000088;
+    animation: slide-in 0.8s;
+    z-index: 1;
+
+    &::before {
+        content: "Akademickie Koło \A Aplikacji Internetowych";
+        box-sizing: border-box;
+        white-space: pre-wrap;
+        color: transparent;
+        display: flex;
+        // justify-content: center;
+        text-align: left;
+        align-items: center;
+        position: absolute;
+        top: -80px;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 64px;
+        background-image: url("../img/logo.svg");
+        background-size: 64px 64px;
+        background-position: center;
+        background-repeat: no-repeat;
+        animation: roll-in 1.2s ease-in-out, text-appear 0.35s ease 1 normal 1.2s forwards;
+    }
+
+    .basic-title {
+        color: $primary-color;
+        font-size: 2em;
+    }
+
+    .form-line {
+        border: 1px solid $primary-color;
+        width: 60%;
+        margin: 20px auto;
+    }
+
+    form label, form span {
+        text-transform: lowercase;
+        letter-spacing: 0.05em;
+        font-size: 0.9em;
+        // font-size: 0.75em;
+    }
+
+    input {
+        background-color: transparent;
+        font-size: inherit;
+        font-family: inherit;
+        color: inherit;
+        border: none;
+        border-radius: 128px;
+        padding: 24px;
+        outline: none;
+        box-sizing: border-box;
+
+        &[type=text], &[type=email] {
+            display: block;
+            margin: 8px 0 24px 0;
+            border: 1px solid darken($text-color, 30%);
+            width: 100%;
+            height: 30px;
+            transition: all 0.3s;
+
+            &:focus {
+                @include light-up;
+            }
+        }
+
+        &[type=submit] {
+            cursor: pointer;
+            color: $text-color;
+            text-align: center;
+            display: block;
+            width: 100%;
+            transition: all 0.3s;
+            border: 1px solid darken($text-color, 30%);
+            margin-top: 48px;
+            padding: 12px;
+
+            &:hover {
+                @include light-up;
+                background-color: $primary-color;
+            }
+
+            &:active {
+                transform: scale(1.1);
+            }
+        }
+
+        &[type=checkbox] {
+            border: 1px solid $primary-color;
+            text-transform: none;
+        }
+    }
+}
+
+.container {
+    display: inline-block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+
+        &:checked ~ .checkmark {
+            background-color: $primary-color !important;
+            border: 1px solid $primary-color;
+
+            &::after {
+                opacity: 1;
+            }
+        }
+    }
+
+    &:hover input  ~ .checkmark {
+        background-color: $text-color;
+    }
+
+    &:active .checkmark {
+        transform: scale(1.3);
+    }
+
+    .checkmark::after {
+        left: 9px;
+        top: 5px;
+        width: 5px;
+        height: 10px;
+        border: solid $text-color;
+        border-width: 0 3px 3px 0;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: $bg-color;
+    border: 1px solid $text-color;
+    border-radius: 50%;
+    transition: all 0.3s;
+
+    &::after {
+        content: "";
+        position: absolute;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+}
+
+pre {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: rgba($text-color, 0.5);
+    animation: code-animation 10s ease 2 alternate forwards;
+    transform-origin: center;
+    transition: transform 20s linear;
+    user-select: none;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.invalid {
+    animation: invalid-shake-x 0.1s ease 4, invalid-pulse 0.2s ease 2 alternate;
+}
