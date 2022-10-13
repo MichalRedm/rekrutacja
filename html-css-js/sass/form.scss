@@ -40,6 +40,29 @@ body {
 	background-size: 400% 400%;
 	animation: gradient 20s ease infinite;
 	height: 100vh;
+    transition: font-size 0.3s;
+}
+
+@media only screen and (max-height: 900px) {
+    #task-frontend {
+        top: 16px;
+    }
+}
+
+@media only screen and (max-height: 860px) {
+    body {
+        font-size: 18px;
+    }
+
+    #task-frontend {
+        top: 40px;
+    }
+}
+
+@media only screen and (max-height: 750px) {
+    body {
+        font-size: 14px;
+    }
 }
 
 @keyframes gradient {
@@ -62,7 +85,7 @@ body {
 #task-frontend {
     position: relative;
     border-radius: 48px;
-	max-width: 850px;
+	max-width: Min(850px, calc(100vw - 160px));
 	text-align: center;
     background-color: $bg-color;
     padding: 48px;
