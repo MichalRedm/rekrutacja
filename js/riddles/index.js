@@ -1,16 +1,23 @@
-// 1. odwróć liczbę
-// np dla 12345, funkcja powinna zwrócić 54321
-function reverseNumber() {
-  // uzupełnij tutaj
-}
-
-console.log("1.", reverseNumber(12345));
-
-// 2. doodaj do siebie wszystkie wartości z tablicy, które są parzyste
-// dla tablicy tab powinniśmy otrzymać 2 + 4 + 6 + 8 = 20
+"use strict";
+const sol1 = document.getElementById("sol1"), sol2 = document.getElementById("sol2");
+sol1.innerText = String(reverseNumber(12345));
 const tab = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-function addEven(array) {
-  // uzupełnij tutaj
+sol2.innerText = String(addEven(tab));
+function reverseNumber(n) {
+    let result = 0, digit;
+    while (n > 0) {
+        digit = n % 10;
+        result = 10 * result + digit;
+        n = (n - digit) / 10;
+    }
+    return result;
 }
-
-console.log("2.", addEven(tab));
+function addEven(array) {
+    let sum = 0;
+    array.forEach(n => {
+        if (n % 2 == 0) {
+            sum += n;
+        }
+    });
+    return sum;
+}
