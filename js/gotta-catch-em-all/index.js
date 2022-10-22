@@ -1,42 +1,73 @@
-/*
-  1. W pliku data.js pod zmienna "pokemons" znajduje się tablica zawierająca dane wielu pokemonów, masz do niej dostęp również w tym pliku. 
-  Chciałbym, abyś użył jej do wyświetlenia wszystkich pokemonów w naszym Pokedexie. 
-  W tym celu dla każdego z nich możesz stworzyć nowy element drzeewa DOM i umieścić w nim informacje o Pokemonie (możesz zawrzeć tam jego nazwę, zdjęcie, a na kontener w którym się znajduje nadać specjalną klasę zależnie od typu)
-*/
-
-// tutaj złapiemy sekcję, do której będziemy dodawać pokemony
-const pokemonsContainer = document.querySelector(".pokemons");
-
-function renderPokemons(pokemons) {
-  // uzupełnij tutaj
-}
-
-// następnie wykonaj uzupełnioną metodę z tablicą pokemons, aby sprawdzić czy wszystko działa
-// renderPokemons(pokemons);
-
-/*
-  2. Przeglądanie całej listy pokemonów może okazać się trochę uciążliwe. Fajnie byłoby skorzystać z filtrów, które już znajdują sie w pliku html. 
-  Napisz ciało funkcji które pozwoli nam na:
-  - filtrowanie po typie
-  - filtrowanie po nazwie (wpisany fragment zawiera się w nazwie pokemona)
-*/
-
-function filterPokemons(pokemons) {
-  // uzupełnij tutaj
-  // zwróć odfiltrowaną tablicę pokemonów
-}
-
+"use strict";
+const allPokemonsContainer = document.querySelector(".pokemons");
+const pokemonNameInput = document.getElementById("pokemon-name");
+const formFiltersTypesConatiner = document.getElementById("formFiltersTypes");
+const formFiltersTypes = Array.from(formFiltersTypesConatiner.querySelectorAll("input"));
 const form = document.querySelector("form");
-
 function submitForm(event) {
-  event.preventDefault();
-  // następnie wykonaj uzupełnioną metodę z tablicą pokemons, aby sprawdzić czy wszystko działa
-  // renderPokemons(filterPokemons(pokemons));
+    event.preventDefault();
+    const filters = {
+        types: getTypesFilters(),
+        name: pokemonNameInput.value
+    };
+    Pokemon.filter(filters);
 }
-
+function getTypesFilters() {
+    const types = [];
+    formFiltersTypes.forEach(element => {
+        if (element.checked) {
+            types.push(element.id);
+        }
+    });
+    return types;
+}
 form.addEventListener("submit", submitForm);
-
-/*
-  3. Pokedex powinien wyglądać trochę lepiej, niż ten tutaj. W folderze znajdziesz plik style.css, w którym możesz ulepszyć wygląd naszego pokedexa
-  Liczymy na Twoją kreatywność 😉
-*/
+class Pokemon {
+    constructor(data) {
+        this.id = data.id;
+        this.name = data.name;
+        this.types = data.types;
+        this.image = data.image;
+        this.card = this.generateCard();
+        Pokemon.list.push(this);
+    }
+    generateCard() {
+        const pokemonContainer = document.createElement("article");
+        pokemonContainer.classList.add("pokemon");
+        const image = document.createElement("img");
+        image.classList.add("pokemon__image");
+        image.setAttribute("src", this.image);
+        image.setAttribute("alt", `Image of the ${this.name}`);
+        pokemonContainer.appendChild(image);
+        const info = document.createElement("div");
+        info.classList.add("pokemon__info");
+        const name = document.createElement("h1");
+        name.innerText = this.name;
+        info.appendChild(name);
+        const types = document.createElement("p");
+        types.classList.add("pokemon__types");
+        this.types.forEach(type => {
+            const typeContainer = document.createElement("div");
+            typeContainer.innerText = type;
+            types.appendChild(typeContainer);
+        });
+        info.append(types);
+        pokemonContainer.appendChild(info);
+        allPokemonsContainer.appendChild(pokemonContainer);
+        return pokemonContainer;
+    }
+    set display(value) {
+        this.card.style.display = value ? "flex" : "none";
+    }
+    get display() {
+        return this.card.style.display == "flex";
+    }
+    static renderPokemons(pokemonsData) {
+        pokemonsData.forEach(pokemonData => new Pokemon(pokemonData));
+    }
+    static filter(filterObject) {
+        Pokemon.list.forEach(pokemon => pokemon.display = pokemon.types.some(element => filterObject.types.includes(element)) && pokemon.name.toLowerCase().includes(filterObject.name.toLowerCase()));
+    }
+}
+Pokemon.list = [];
+Pokemon.renderPokemons(pokemons);
