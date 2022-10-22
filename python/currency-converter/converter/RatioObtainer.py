@@ -1,4 +1,5 @@
-import json, datetime, urllib.request
+from doctest import FAIL_FAST
+import json, datetime, urllib.request, os.path
 
 
 class RatioObtainer:
@@ -10,27 +11,70 @@ class RatioObtainer:
         self.target = target
 
     def was_ratio_saved_today(self):
-        # TODO
-        # This function checks if given ratio was saved today and if the file with ratios is created at all
-        # should return false when file doesn't exist or if there's no today's exchange rate for given values at all
-        # should return true otherwise
-        pass
+
+        if not os.path.isfile("ratios.json"):
+            return False
+
+        with open("ratios.json", "r", encoding="utf-8") as file:
+            data = json.load(file)
+
+        try:
+            next(
+                item for item in data
+                if item['base_currency'] == self.base
+                and item['target_currency'] == self.target
+                and item['date_fetched'] == datetime.datetime.now().strftime('%Y-%m-%d')
+            )
+        except StopIteration:
+            return False
+
+        return True
 
     def fetch_ratio(self):
-        # TODO
-        # This function calls API for today's exchange ratio
-        # Should ask API for today's exchange ratio with given base and target currency
-        # and call save_ratio method to save it
-        pass
+
+        with urllib.request.urlopen(f'https://api.exchangerate.host/latest?base={self.base}&symbols={self.target}') as response:
+            response_text = response.read()
+
+        ratio = json.loads(response_text)['rates'][self.target]
+        
+        self.save_ratio(ratio)
 
     def save_ratio(self, ratio):
-        # TODO
-        # Should save or update exchange rate for given pair in json file
-        # takes ratio as argument
-        # example file structure is shipped in project's directory, yours can differ (as long as it works)
-        pass
+
+        with open("ratios.json", "r", encoding="utf-8") as file:
+            data = json.load(file)
+
+        try:
+            key = next(
+                key for key, item in enumerate(data)
+                if item['base_currency'] == self.base
+                and item['target_currency'] == self.target
+            )
+        
+        except StopIteration:
+            data.append({
+                'base_currency': self.base,
+                'target_currency': self.target,
+                'date_fetched': datetime.datetime.now().strftime('%Y-%m-%d'),
+                'ratio': ratio 
+            })
+            
+        else:
+            data[key]['date_fetched'] = datetime.datetime.now().strftime('%Y-%m-%d')
+            data[key]['ratio'] = ratio
+        
+        finally:
+            data_text = json.dumps(data, indent=2)
+            with open("ratios.json", "w", encoding="utf-8") as file:
+                file.write(data_text)
 
     def get_matched_ratio_value(self):
-        # TODO
-        # Should read file and receive exchange rate for given base and target currency from that file
-        pass
+
+        with open("ratios.json", "r", encoding="utf-8") as file:
+            data = json.load(file)
+
+        return float(next(
+            item for item in data
+            if item['base_currency'] == self.base
+            and item['target_currency'] == self.target
+        )['ratio'])
