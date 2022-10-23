@@ -11,6 +11,12 @@ body {
     background-color: #2e2546;
     color: $text-color;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 16px;
+}
+
+h1 {
+    text-align: center;
+    font-weight: lighter;
 }
 
 #starshipsContainer {
@@ -20,20 +26,38 @@ body {
     gap: 32px;
 }
 
+@media only screen and (max-width: 1300px) {
+    #starshipsContainer {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    #starshipsContainer {
+        grid-template-columns: 1fr;
+    }
+}
+
 .starship {
-    padding: 16px;
     background-color: #453a52;
     // color: black;
     box-sizing: border-box;
     box-shadow: 0 0 12px 0 #00000066;
-
-    h1 {
-        text-align: center;
-        font-weight: lighter;
-    }
+    display: flex;
+    flex-direction: column;
 
     table {
         width: 100%;
+        border-collapse: collapse;
+        flex: 1;
+
+        tr:nth-child(odd) {
+            background-color: rgba($text-color, 0.07);
+        }
+
+        td {
+            padding: 8px 16px;
+        }
     }
 
     .none {
@@ -45,4 +69,5 @@ body {
 ul {
     padding: 0;
     margin: 0;
+    list-style: none;
 }
