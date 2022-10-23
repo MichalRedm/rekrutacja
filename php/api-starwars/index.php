@@ -17,3 +17,74 @@
 // Display all starships provided through the API, with their properties
 // Each ship should have the names of pilots and names of films displayed (if none, indicate)
 // Each pilot should have its species also displayed
+
+require "vendor/autoload.php";
+
+use GuzzleHttp\Client;
+
+$client = new Client([/*"base_uri" => "https://swapi.dev/api/", */"verify" => false]);
+
+// $people = json_decode($client->get("people")->getBody())->results;
+// $films = json_decode($client->get("films")->getBody())->results;
+$starships = json_decode($client->get("https://swapi.dev/api/starships")->getBody())->results;
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Star Wars</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <div id="starshipsContainer">
+        <?php foreach ($starships as $starship): ?>
+            <article class="starship">
+                <h1><?=$starship->name?></h1>
+                <table>
+                    <tr>
+                        <td>Model</td>
+                        <td><?=$starship->model?></td>
+                    </tr>
+                    <tr>
+                        <td>Manufacturer</td>
+                        <td><?=$starship->manufacturer?></td>
+                    </tr>
+                    <tr>
+                        <td>Pilots</td>
+                        <td>
+                            <?php if ($starship->pilots): ?>
+                                <ul>
+                                    <?php foreach ($starship->pilots as $pilot): ?>
+                                        <?php $pilot_data = json_decode($client->get($pilot)->getBody()); ?>
+                                        <li><?=$pilot_data->name?> - <?=$pilot_data->species ? json_decode($client->get($pilot_data->species[0])->getBody())->name : "Human"?></li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            <?php else: ?>
+                                <span class="none">None</span>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Films</td>
+                        <td>
+                            <?php if ($starship->films): ?>
+                                <ul>
+                                    <?php foreach ($starship->films as $film): ?>
+                                        <li><?=json_decode($client->get($film)->getBody())->title?></li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            <?php else: ?>
+                                <span class="none">None</span>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                </table>
+            </article>
+        <?php endforeach; ?>
+    </div>
+</body>
+</html>
