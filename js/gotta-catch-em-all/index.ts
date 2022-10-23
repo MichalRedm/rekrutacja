@@ -120,8 +120,9 @@ class Pokemon implements PokemonData {
     }
 
     /**
+     * Renders the list of all pokemons.
      * 
-     * @param pokemonsData 
+     * @param pokemonsData List containing raw data about each pokemon.
      */
     static renderPokemons(pokemonsData: PokemonData[]): void {
         pokemonsData.forEach(pokemonData => new Pokemon(pokemonData));
