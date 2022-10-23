@@ -22,10 +22,8 @@ require "vendor/autoload.php";
 
 use GuzzleHttp\Client;
 
-$client = new Client([/*"base_uri" => "https://swapi.dev/api/", */"verify" => false]);
+$client = new Client(["verify" => false]);
 
-// $people = json_decode($client->get("people")->getBody())->results;
-// $films = json_decode($client->get("films")->getBody())->results;
 $starships = json_decode($client->get("https://swapi.dev/api/starships")->getBody())->results;
 
 ?>
