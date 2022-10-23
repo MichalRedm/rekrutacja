@@ -140,6 +140,19 @@ button {
     }
 }
 
+.no-pokemons {
+    display: block;
+
+    &::before {
+        content: "No pokemons found";
+        font-style: italic;
+        color: rgba($text-color, 0.5);
+        text-align: center;
+        display: block;
+        width: 100%;
+    }
+}
+
 @media only screen and (max-width: 720px) {
     #formFiltersTypes {
         grid-template-columns: repeat(5, 1fr);

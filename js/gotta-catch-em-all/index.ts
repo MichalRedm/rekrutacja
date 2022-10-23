@@ -29,6 +29,12 @@ function submitForm(event: Event): void {
 
     Pokemon.filter(filters);
 
+    if (allPokemonsContainer.offsetHeight) {
+        allPokemonsContainer.classList.remove("no-pokemons");
+    } else {
+        allPokemonsContainer.classList.add("no-pokemons");
+    }
+
 }
 
 form.addEventListener("submit", submitForm);

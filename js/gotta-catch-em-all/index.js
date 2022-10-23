@@ -11,6 +11,12 @@ function submitForm(event) {
         name: pokemonNameInput.value
     };
     Pokemon.filter(filters);
+    if (allPokemonsContainer.offsetHeight) {
+        allPokemonsContainer.classList.remove("no-pokemons");
+    }
+    else {
+        allPokemonsContainer.classList.add("no-pokemons");
+    }
 }
 form.addEventListener("submit", submitForm);
 function getTypesFilters() {
@@ -40,7 +46,6 @@ class Pokemon {
         image.setAttribute("alt", `Image of the ${this.name}`);
         pokemonContainer.appendChild(image);
         const info = document.createElement("div");
-        info.classList.add("pokemon__info");
         const name = document.createElement("h1");
         name.innerText = this.name;
         info.appendChild(name);
