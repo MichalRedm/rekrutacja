@@ -91,7 +91,7 @@ function reset(): void {
         symbols[i] = ["", "", ""];
     }
 
-    // Set the `turn` back to it's initial value.
+    // Set the `turn` variable back to it's initial value.
     turn = "x";
 
     // Remove extra classes for all the board tiles to remove X and O symbols from the board.
