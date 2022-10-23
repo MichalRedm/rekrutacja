@@ -22,11 +22,12 @@ body {
   
 h1 {
     margin-bottom: 16px;
+    text-align: center;
+    font-weight: lighter;
 }
   
 main {
-    width: 100%;
-    max-width: 960px;
+    width: 960px;
     margin: auto;
 }
   
@@ -79,5 +80,90 @@ button {
                 margin-right: 0.75em;
             }
         }
+    }
+}
+
+#pokemonNameContainer {
+    display: flex;
+    gap: 16px;
+    margin: 16px 0;
+}
+
+#pokemonName, button {
+    background: transparent;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    padding: 8px 12px;
+    border: 1px solid $text-color;
+    border-radius: 100px;
+    display: block;
+    outline: none;
+}
+
+#pokemonName {
+    flex: 1;
+}
+
+button {
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+        background-color: $text-color;
+        color: $background-color;
+    }
+}
+
+.filters {
+    margin-top: 32px;
+}
+
+#formFiltersTypes {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+}
+
+@media only screen and (max-width: 1024px) {
+    main {
+        width: 100%;
+        margin: 0;
+        padding: 0 32px;
+    }
+
+    #formFiltersTypes {
+        grid-template-columns: repeat(7, 1fr);
+    }
+
+    .pokemons {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media only screen and (max-width: 720px) {
+    #formFiltersTypes {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+@media only screen and (max-width: 620px) {
+    .pokemons {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media only screen and (max-width: 530px) {
+    #formFiltersTypes {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media only screen and (max-width: 350px) {
+    body {
+        font-size: 14px;
+    }
+
+    #formFiltersTypes {
+        grid-template-columns: repeat(2, 1fr);
     }
 }

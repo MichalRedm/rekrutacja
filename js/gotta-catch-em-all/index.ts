@@ -7,7 +7,7 @@ interface FilterObject {
 
 const form                      = <HTMLFormElement>  document.querySelector("form");
 const allPokemonsContainer      = <HTMLDivElement>   document.querySelector(".pokemons");
-const pokemonNameInput          = <HTMLInputElement> document.getElementById("pokemon-name");
+const pokemonNameInput          = <HTMLInputElement> document.getElementById("pokemonName");
 const formFiltersTypesConatiner = <HTMLDivElement>   document.getElementById("formFiltersTypes");
 
 const formFiltersTypes: HTMLInputElement[] = Array.from(formFiltersTypesConatiner.querySelectorAll("input"));
@@ -90,7 +90,6 @@ class Pokemon implements PokemonData {
         pokemonContainer.appendChild(image);
 
         const info: HTMLDivElement = document.createElement("div");
-        info.classList.add("pokemon__info");
 
         const name: HTMLHeadingElement = document.createElement("h1");
         name.innerText = this.name;

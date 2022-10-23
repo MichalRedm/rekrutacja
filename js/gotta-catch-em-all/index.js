@@ -1,7 +1,7 @@
 "use strict";
 const form = document.querySelector("form");
 const allPokemonsContainer = document.querySelector(".pokemons");
-const pokemonNameInput = document.getElementById("pokemon-name");
+const pokemonNameInput = document.getElementById("pokemonName");
 const formFiltersTypesConatiner = document.getElementById("formFiltersTypes");
 const formFiltersTypes = Array.from(formFiltersTypesConatiner.querySelectorAll("input"));
 function submitForm(event) {
