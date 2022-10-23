@@ -28,11 +28,9 @@ function displayTurn(turn) {
 function checkWin() {
     const result = (() => {
         for (let i = 0; i < 3; i++) {
-            if (same(symbols[i][0], symbols[i][1], symbols[i][2])) {
-                return symbols[i][0];
-            }
-            if (same(symbols[0][i], symbols[1][i], symbols[2][i])) {
-                return symbols[0][i];
+            if (same(symbols[i][0], symbols[i][1], symbols[i][2]) ||
+                same(symbols[0][i], symbols[1][i], symbols[2][i])) {
+                return symbols[i][i];
             }
         }
         if (same(symbols[0][0], symbols[1][1], symbols[2][2]) ||
@@ -43,7 +41,7 @@ function checkWin() {
     })();
     if (result) {
         gamePending = false;
-        alert(`Player ${result.toUpperCase()} has won the game!`);
+        setTimeout(() => alert(`Player ${result.toUpperCase()} has won the game!`), 50);
     }
 }
 function reset() {
@@ -55,5 +53,5 @@ function reset() {
     gamePending = true;
 }
 function same(a, b, c) {
-    return a == b && a == c;
+    return a == b && a == c && a != "";
 }

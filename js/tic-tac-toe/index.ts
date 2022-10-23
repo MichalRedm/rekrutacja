@@ -56,18 +56,12 @@ function checkWin(): void {
 
     const result: Symbols = (() => {
 
+        // Check the rows and columns.
         for (let i = 0; i < 3; i++) {
-
-            // Check the rows.
-            if (same(symbols[i][0], symbols[i][1], symbols[i][2])) {
-                return symbols[i][0];
+            if (same(symbols[i][0], symbols[i][1], symbols[i][2]) ||
+                same(symbols[0][i], symbols[1][i], symbols[2][i])) {
+                return symbols[i][i];
             }
-    
-            // Check the columns.
-            if (same(symbols[0][i], symbols[1][i], symbols[2][i])) {
-                return symbols[0][i];
-            }
-    
         }
     
         // Check the diagonals.
@@ -84,7 +78,7 @@ function checkWin(): void {
     // If either of the players has won the game, end it and display the alert.
     if (result) {
         gamePending = false;
-        alert(`Player ${result.toUpperCase()} has won the game!`);
+        setTimeout(() => alert(`Player ${result.toUpperCase()} has won the game!`), 50);
     }
     
 }
@@ -109,13 +103,13 @@ function reset(): void {
 }
 
 /**
- * Determines whether the all of the three provided parameters are equal.
+ * Determines whether the all of the three provided symbols are equal (but set).
  * 
- * @param a First parameter.
- * @param b Second parameter.
- * @param c Third parameter.
- * @returns `true` if all the parameters are equal, `false` otherwise.
+ * @param a First symbol.
+ * @param b Second symbol.
+ * @param c Third symbol.
+ * @returns `true` if all the parameters are equal (but not empty), `false` otherwise.
  */
-function same(a: unknown, b: unknown, c: unknown): boolean {
-    return a == b && a == c;
+function same(a: Symbols, b: Symbols, c: Symbols): boolean {
+    return a == b && a == c && a != "";
 }

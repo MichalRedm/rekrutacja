@@ -1,9 +1,9 @@
 "use strict";
+const form = document.querySelector("form");
 const allPokemonsContainer = document.querySelector(".pokemons");
 const pokemonNameInput = document.getElementById("pokemon-name");
 const formFiltersTypesConatiner = document.getElementById("formFiltersTypes");
 const formFiltersTypes = Array.from(formFiltersTypesConatiner.querySelectorAll("input"));
-const form = document.querySelector("form");
 function submitForm(event) {
     event.preventDefault();
     const filters = {
@@ -12,6 +12,7 @@ function submitForm(event) {
     };
     Pokemon.filter(filters);
 }
+form.addEventListener("submit", submitForm);
 function getTypesFilters() {
     const types = [];
     formFiltersTypes.forEach(element => {
@@ -21,7 +22,6 @@ function getTypesFilters() {
     });
     return types;
 }
-form.addEventListener("submit", submitForm);
 class Pokemon {
     constructor(data) {
         this.id = data.id;
@@ -58,9 +58,6 @@ class Pokemon {
     }
     set display(value) {
         this.card.style.display = value ? "flex" : "none";
-    }
-    get display() {
-        return this.card.style.display == "flex";
     }
     static renderPokemons(pokemonsData) {
         pokemonsData.forEach(pokemonData => new Pokemon(pokemonData));
